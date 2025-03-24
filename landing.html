@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedixPredict</title>
+    <link rel="stylesheet" href="styler.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+</head>
+<body>
+    <audio id="background-music" autoplay loop>
+        <source src="No Love - Shubh.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        let audio = document.getElementById("background-music");
+        
+        // Try to play immediately (some browsers allow it)
+        audio.play().catch(error => {
+            console.log("Autoplay failed. Waiting for user interaction...");
+            
+            // Play on first user interaction
+            document.body.addEventListener("click", function() {
+                audio.play();
+            }, { once: true });
+        });
+    });
+    </script>
+    <div class="container">
+        <!-- Left Section for Video -->
+        <div class="video-container">
+            <!-- Add your video source in place of 'your-video.mp4' -->
+            <video id="background-video" autoplay loop muted>
+                <source src="3191573-hd_1920_1080_25fps.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Right Section -->
+        <div class="content">
+            <h1>Welcome to <span class="highlight">MedixPredict</span></h1>
+            <p id="typed-text"></p>
+            <a href="index.html" class="btn">Get Started</a>
+        </div>
+    </div>
+
+    <script>
+        var typed = new Typed("#typed-text", {
+            strings: [
+                "An AI-powered platform for skin disease diagnosis.",
+                "Get accurate predictions using advanced machine learning.",
+                "Ensuring privacy, security, and reliability in medical AI."
+            ],
+            typeSpeed: 50,
+            backSpeed: 30,
+            loop: true
+        });
+    </script>
+</body>
+</html>

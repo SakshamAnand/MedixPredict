@@ -1,0 +1,260 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedixPredict</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Tailwind CDN for utility classes and animations -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- ScrollReveal CDN -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+<body class="bg-black text-gray-100 overflow-x-hidden relative">
+
+  <!-- Navbar -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-50">
+    <nav class="flex justify-between items-center p-4 backdrop-blur-md bg-black/70 border-b border-gray-800">
+      <!-- Logo -->
+      <div id="logo" class="cursor-pointer transform transition-transform duration-300 hover:scale-105">
+        <a href="#">
+          <h1 class="text-2xl font-bold tracking-wider">MedixPredict</h1>
+        </a>
+      </div>
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex space-x-8">
+        <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="#upload" class="nav-link">Upload</a></li>
+        <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+      <!-- Mobile Hamburger Menu -->
+      <div id="hamburger" class="md:hidden cursor-pointer space-y-1.5">
+        <span class="block w-8 h-0.5 bg-gray-400"></span>
+        <span class="block w-8 h-0.5 bg-gray-400"></span>
+        <span class="block w-8 h-0.5 bg-gray-400"></span>
+      </div>
+    </nav>
+    <!-- Mobile Menu -->
+    <ul id="mobile-menu" class="hidden flex-col bg-black/90 backdrop-blur-md absolute top-full left-0 right-0 p-4 space-y-4">
+      <li><a href="#hero" class="mobile-nav-link">Home</a></li>
+      <li><a href="#upload" class="mobile-nav-link">Upload</a></li>
+      <li><a href="#about" class="mobile-nav-link">About</a></li>
+      <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+    </ul>
+  </header>
+
+  <!-- Dynamic Hero Section -->
+  <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <!-- Background Animation for Hero Section -->
+    <div class="absolute inset-0 z-0">
+      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge>
+              <feMergeNode in="coloredBlur"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <rect width="100%" height="100%" fill="#000" />
+        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#39ff14" stroke-width="1" opacity="0.1" />
+      </svg>
+    </div>
+    <!-- Hero Content -->
+    <div class="text-center relative z-10 px-4">
+      <h2 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-wide">
+        Empowering Skin Health with AI Diagnosis.
+      </h2>
+      <p class="text-lg md:text-2xl mb-4 max-w-2xl mx-auto text-gray-300">
+        Harness the power of next-gen AI to accurately assess your skin's condition.
+      </p>
+      <p class="text-sm md:text-base mb-8 max-w-xl mx-auto text-gray-400">
+        Experience cutting-edge diagnostics that blend futuristic technology with expert healthcare insights.
+      </p>
+      <a href = "#disease-prediction">
+      <button id="start-diagnosis" class="px-8 py-4 font-bold text-lg rounded-full transition-all hover:scale-105 bg-transparent border-neon">
+        Start Diagnosis
+      </button>
+      </a>
+    </div>
+    <!-- AI-Driven Particle Layer for Hero Section -->
+    <canvas id="particle-canvas" class="absolute inset-0"></canvas>
+  </section>
+
+  <!-- AI-Powered Disease Prediction Section -->
+  <section id="disease-prediction" class="py-16 relative bg-gradient-disease">
+    <canvas id="disease-particle-canvas" class="absolute inset-0 pointer-events-none"></canvas>
+    <div class="container mx-auto px-4 relative z-10">
+        <h3 class="text-3xl font-bold text-center mb-12">We Can Detect These Skin Conditions</h3>
+        <div class="scroll-container no-padding">
+            <div id="scrollWrapper" class="scroll-wrapper"></div>
+        </div>
+    </div>
+</section>
+<script>
+    const scrollWrapper = document.getElementById('scrollWrapper');
+    const items = ["Melanoma", "Psoriasis", "Eczema", "Basal Cell Carcinoma", "Rosacea", "Vitiligo", "Actinic Keratosis", "Tinea", "Hives"];
+    
+    function createScrollingItems() {
+        scrollWrapper.innerHTML = '';
+        const totalItems = items.concat(items);
+        totalItems.forEach(name => {
+            let div = document.createElement('div');
+            div.classList.add('item');
+            div.textContent = name;
+            scrollWrapper.appendChild(div);
+
+            // Pause scrolling on hover
+            div.addEventListener('mouseenter', () => {
+                isPaused = true;
+                div.classList.add('glow');
+            });
+            div.addEventListener('mouseleave', () => {
+                isPaused = false;
+                div.classList.remove('glow');
+            });
+        });
+    }
+
+    createScrollingItems();
+
+    let scrollAmount = 0;
+    let scrollSpeed = 1; // Reduced speed
+    let isPaused = false;
+
+    function autoScroll() {
+        if (!isPaused) {
+            scrollAmount -= scrollSpeed;
+            scrollWrapper.style.transform = `translateX(${scrollAmount}px)`;
+            if (Math.abs(scrollAmount) >= scrollWrapper.scrollWidth / 2) {
+                scrollAmount = 0;
+            }
+        }
+        requestAnimationFrame(autoScroll);
+    }
+
+    autoScroll();
+</script>
+
+
+  <!-- Image Upload Section -->
+  <section id="upload" class="py-16 bg-gray-900">
+    <div class="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+      <!-- Left Side: Futuristic Illustration -->
+      <div class="flex items-center justify-center">
+        <svg width="300" height="300" viewBox="0 0 300 300" class="animate-pulse">
+          <defs>
+            <radialGradient id="ai-gradient" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#8b5cf6"/>
+              <stop offset="100%" stop-color="#4f46e5"/>
+            </radialGradient>
+          </defs>
+          <circle cx="150" cy="150" r="100" fill="url(#ai-gradient)" />
+          <circle cx="150" cy="150" r="70" fill="#000" />
+        </svg>
+      </div>
+      <!-- Right Side: Upload Widget -->
+      <div class="flex flex-col items-center space-y-6">
+        <button id="upload-btn" class="relative px-8 py-4 text-lg font-bold rounded-full transition-all hover:scale-105 bg-transparent border-neon" onclick="window.location.href='http://172.20.156.254:8501'">
+          Upload Image
+        </button>
+        <p class="px-4 text-center text-sm text-gray-400 max-w-md">
+          Important: AI predictions are not 100% accurate. Please consult a dermatologist for confirmation.
+        </p>
+        <!-- Hidden File Input -->
+        <input type="file" id="file-input" accept="image/*" class="hidden" />
+        <!-- Preview Area -->
+        <div id="upload-preview" class="mt-4 w-full">
+          <!-- Uploaded image info will be inserted here by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Page -->
+  <section id="about" class="py-16">
+    <div class="container mx-auto px-4">
+      <h3 class="text-3xl font-bold text-center mb-12">Meet the Creators</h3>
+      <div class="flex flex-col md:flex-row justify-center gap-8">
+        <!-- Creator Card 1 -->
+        <div class="creator-card bg-gray-800 p-6 rounded-lg border border-gray-700 transform transition-all hover:scale-105">
+          <h4 class="text-2xl font-semibold mb-2">Saksham Anand</h4>
+          <p class="text-gray-400"> Saksham is a researcher and developer specializing in AI, machine learning, and sensor-based technologies. Their work spans multiple domains, including fog detection for aviation, sustainability in multiprocessors, and AI-driven customer support. They are currently developing a project to optimize SEEG electrode placement for epilepsy treatment. With a structured approach to problem-solving, they emphasize algorithmic breakdowns, hardware integration, and practical applications in their research.</p>
+        </div>
+        <!-- Creator Card 2 -->
+        <div class="creator-card bg-gray-800 p-6 rounded-lg border border-gray-700 transform transition-all hover:scale-105">
+          <h4 class="text-2xl font-semibold mb-2">Vasu Arya</h4>
+          <p class="text-gray-400">Vasu is an expert in AI and CAD design, with a strong background in developing intelligent systems for engineering and manufacturing applications. Their work focuses on integrating AI-driven automation into CAD workflows, enhancing efficiency and precision in design processes. With a keen interest in computational modeling and optimization, Vasu applies AI techniques to streamline complex design tasks and improve product development cycles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Page -->
+  <section id="contact" class="py-16 bg-gray-900">
+    <div class="container mx-auto px-4">
+      <h3 class="text-3xl font-bold text-center mb-12">Contact Us</h3>
+      <form id="contact-form" class="max-w-lg mx-auto space-y-4">
+        <div class="form-group relative">
+          <input type="text" id="name" required class="input-field peer" placeholder=" " />
+          <label for="name" class="floating-label">Name</label>
+          <span class="error-msg hidden">Please enter your name.</span>
+        </div>
+        <div class="form-group relative">
+          <input type="email" id="email" required class="input-field peer" placeholder=" " />
+          <label for="email" class="floating-label">Email</label>
+          <span class="error-msg hidden">Please enter a valid email.</span>
+        </div>
+        <div class="form-group relative">
+          <textarea id="message" required class="input-field peer" rows="4" placeholder=" "></textarea>
+          <label for="message" class="floating-label">Message</label>
+          <span class="error-msg hidden">Message cannot be empty.</span>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-full transition-all hover:scale-105 bg-transparent border-neon">
+          Send Message
+        </button>
+        <div id="form-success" class="mt-4 text-center text-green-500 hidden">Message sent successfully!</div>
+      </form>
+      <!-- Social Media Icons -->
+      <div class="mt-8 flex justify-center space-x-4">
+        <a href="https://www.instagram.com/spacex/?hl=en" target="_blank" class="social-icon">IN</a>
+        <a href="https://x.com/SpaceX?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor&mx=2" target="_blank" class="social-icon">TW</a>
+        <a href="https://www.linkedin.com/company/spacex" target="_blank" class="social-icon">LI</a>
+        <a href="/blog.html" target="_blank" class="social-icon">Blog</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-6 bg-black/80 border-t border-gray-800">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+      <p class="text-sm">&copy; 2025 MedixPredict. All rights reserved.</p>
+      <div class="flex space-x-4">
+        <a href="#hero" class="footer-link">Home</a>
+        <a href="#upload" class="footer-link">Upload</a>
+        <a href="#about" class="footer-link">About</a>
+        <a href="#contact" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Popup for Disclaimer -->
+  <div id="disclaimer-modal" class="fixed inset-0 flex items-center justify-center bg-black/90 z-50 hidden">
+    <div class="bg-gray-900 border rounded-lg p-8 max-w-sm mx-auto text-center">
+      <h3 class="text-2xl font-bold mb-4">Disclaimer</h3>
+      <p class="mb-6 text-gray-400">AI-predictions might not always be accurate. Make sure you consult your dermatologist to verify your disease.</p>
+      <button id="close-disclaimer" class="px-6 py-2 rounded-full transition-all hover:scale-105 bg-transparent border-neon">Got It</button>
+    </div>
+  </div>
+
+  <script src="script.js" type="module"></script>
+  <script>
+    // Initialize Scroll Reveal Effects
+    ScrollReveal().reveal('.nav-link', { delay: 200, distance: '20px', origin: 'top' });
+    ScrollReveal().reveal('#hero .text-center', { delay: 400, distance: '50px', origin: 'bottom' });
+    ScrollReveal().reveal('#disease-prediction h3, #disease-prediction .disease-card', { delay: 300, distance: '20px', origin: 'bottom', interval: 100 });
+    ScrollReveal().reveal('#upload, #about, #contact, footer', { delay: 300, distance: '20px', origin: 'bottom' });
+  </script>
+</body>
+</html>

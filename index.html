@@ -1,6 +1,64 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gel.ai</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <style>
+        .swiper-container {
+            width: 100%;
+            height: 75%;
+            padding-top: 5px;
+            padding-bottom: 50px;
+        }
+        .swiper-slide {
+          background-position: center;
+          background-size: cover;
+          width: 320px;
+          height: 400px; /* Increase height to accommodate text */
+          background-color: #fff;
+          overflow: hidden;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+      }
+      
+        .picture {
+            width: 320px;
+            height: 320px;
+            overflow: hidden;
+        }
+        .picture img {
+            display: block;
+            width: 100%;
+            height:100%;
+            object-fit: cover;
+        }
+        .detail {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 15px;
+          text-align: center;
+          background-color:#000000
+      }
+      
+        .detail h4 {
+            margin: 0;
+            font-size: 20px;
+            color: #ffffff;
+        }
+        .detail p {
+            font-size: 14px;
+            color: #ffffff;
+        }
+        
+    </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MedixPredict</title>
   <link rel="stylesheet" href="style.css">
@@ -43,100 +101,209 @@
     </ul>
   </header>
 
-  <!-- Dynamic Hero Section -->
-  <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
-    <!-- Background Animation for Hero Section -->
-    <div class="absolute inset-0 z-0">
-      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        <rect width="100%" height="100%" fill="#000" />
-        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#39ff14" stroke-width="1" opacity="0.1" />
-      </svg>
-    </div>
-    <!-- Hero Content -->
-    <div class="text-center relative z-10 px-4">
-      <h2 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-wide">
-        Empowering Skin Health with AI Diagnosis.
-      </h2>
-      <p class="text-lg md:text-2xl mb-4 max-w-2xl mx-auto text-gray-300">
-        Harness the power of next-gen AI to accurately assess your skin's condition.
-      </p>
-      <p class="text-sm md:text-base mb-8 max-w-xl mx-auto text-gray-400">
-        Experience cutting-edge diagnostics that blend futuristic technology with expert healthcare insights.
-      </p>
-      <a href = "#disease-prediction">
-      <button id="start-diagnosis" class="px-8 py-4 font-bold text-lg rounded-full transition-all hover:scale-105 bg-transparent border-neon">
-        Start Diagnosis
-      </button>
-      </a>
-    </div>
+  <!-- Hero Section with Video Background and SVG Overlay -->
+<section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+
+  <!-- Background Video -->
+  <div class="absolute inset-0 z-0">
+    <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-50">
+      <source src="your-video.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Foreground Content -->
+  <div class="text-center relative z-10 px-4">
+    <!-- SVG Overlay -->
+    <svg width="1500" height="500" id="gcmsSvg" class="mx-auto">
+      <!-- Definitions for gradients and mask -->
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="15%" style="stop-color: #ff3535;" />
+          <stop offset="50%" style="stop-color: #00f2ff;" />
+          <stop offset="90%" style="stop-color: #ff00fb;" />
+        </linearGradient>
+        <radialGradient id="maskGradient">
+          <stop offset="0%" style="stop-color: rgb(244, 212, 212); stop-opacity: 1;" />
+          <stop offset="100%" style="stop-color: white; stop-opacity: 0;" />
+        </radialGradient>
+        <mask id="hoverMask">
+          <rect width="100%" height="100%" fill="black" />
+          <circle id="maskCircle" r="120" fill="url(#maskGradient)" cx="-100" cy="-100" />
+        </mask>
+      </defs>
+
+      <!-- Bottom Layer -->
+      <text x="50%" y="60%" text-anchor="middle" dominant-baseline="middle" 
+            font-family="Arial" font-size="260" font-weight="bold" 
+            fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1">
+        GAIL.ai
+      </text>
+
+      <!-- Top Layer with Mask -->
+      <text x="50%" y="60%" text-anchor="middle" dominant-baseline="middle" 
+            font-family="Arial" font-size="260" font-weight="bold" 
+            fill="none" stroke="url(#gradient)" stroke-width="1" mask="url(#hoverMask)">
+        GAIL.ai
+      </text>
+    </svg>
+
+    <!-- Taglines -->
+    <p class="text-lg md:text-2xl mb-4 max-w-2xl mx-auto text-gray-300">
+      Generalized Artificial Intelligence for Lesions
+    </p>
+    <p class="text-sm md:text-base mb-8 max-w-xl mx-auto text-gray-400">
+      Harness the power of next-gen AI to accurately assess your skin's condition.
+    </p>
+  </div>
+
+</section>
+
+  <script>
+      const svg = document.getElementById('gcmsSvg');
+      const maskCircle = document.getElementById('maskCircle');
+
+      svg.addEventListener('mousemove', (e) => {
+          // Convert mouse coordinates to SVG coordinates
+          const pt = svg.createSVGPoint();
+          pt.x = e.clientX;
+          pt.y = e.clientY;
+          const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+          // Move the mask circle to the mouse position
+          maskCircle.setAttribute('cx', svgPt.x);
+          maskCircle.setAttribute('cy', svgPt.y);
+      });
+
+      svg.addEventListener('mouseleave', () => {
+          // Move the mask circle off-canvas when mouse leaves
+          maskCircle.setAttribute('cx', '-100');
+          maskCircle.setAttribute('cy', '-100');
+      });
+  </script>
+
+
+
+</div>
+
+
     <!-- AI-Driven Particle Layer for Hero Section -->
-    <canvas id="particle-canvas" class="absolute inset-0"></canvas>
+    <!-- <canvas id="particle-canvas" class="absolute inset-0"></canvas> -->
   </section>
 
   <!-- AI-Powered Disease Prediction Section -->
-  <section id="disease-prediction" class="py-16 relative bg-gradient-disease">
-    <canvas id="disease-particle-canvas" class="absolute inset-0 pointer-events-none"></canvas>
+  <section id="disease-prediction" class="py-16 relative" style="background-color: rgb(255, 255, 255); z-index: 1; position: relative;">
+    <canvas id="disease-particle-canvas" class="absolute inset-0 pointer-events-none" style="z-index: 0;"></canvas>
     <div class="container mx-auto px-4 relative z-10">
-        <h3 class="text-3xl font-bold text-center mb-12">We Can Detect These Skin Conditions</h3>
-        <div class="scroll-container no-padding">
-            <div id="scrollWrapper" class="scroll-wrapper"></div>
-        </div>
+        <h3 class="text-3xl font-bold text-center mb-12" style="color: #000000;">We Can Detect These Skin Conditions</h3>
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?melanoma" alt="Melanoma">
+                  </div>
+                  <div class="detail">
+                      <h4>Melanoma</h4>
+                      <p>A type of skin cancer that develops from the pigment-producing cells known as melanocytes.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?psoriasis" alt="Psoriasis">
+                  </div>
+                  <div class="detail">
+                      <h4>Psoriasis</h4>
+                      <p>A chronic autoimmune skin condition that causes red, scaly patches on the skin.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?eczema" alt="Eczema">
+                  </div>
+                  <div class="detail">
+                      <h4>Eczema</h4>
+                      <p>A condition that makes the skin red, inflamed, and itchy.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?basalcellcarcinoma" alt="Basal Cell Carcinoma">
+                  </div>
+                  <div class="detail">
+                      <h4>Basal Cell Carcinoma</h4>
+                      <p>A type of skin cancer that begins in the basal cells and appears as a slightly transparent bump.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?rosacea" alt="Rosacea">
+                  </div>
+                  <div class="detail">
+                      <h4>Rosacea</h4>
+                      <p>A chronic skin condition that causes redness and visible blood vessels in the face.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?vitiligo" alt="Vitiligo">
+                  </div>
+                  <div class="detail">
+                      <h4>Vitiligo</h4>
+                      <p>A condition in which the skin loses its pigment cells, leading to discolored patches.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?actinickeratosis" alt="Actinic Keratosis">
+                  </div>
+                  <div class="detail">
+                      <h4>Actinic Keratosis</h4>
+                      <p>A rough, scaly patch on the skin that develops from years of exposure to the sun.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?tinea" alt="Tinea">
+                  </div>
+                  <div class="detail">
+                      <h4>Tinea</h4>
+                      <p>A fungal infection that can affect different parts of the body, also known as ringworm.</p>
+                  </div>
+              </div>
+              <div class="swiper-slide">
+                  <div class="picture">
+                      <img src="https://source.unsplash.com/320x320/?hives" alt="Hives">
+                  </div>
+                  <div class="detail">
+                      <h4>Hives</h4>
+                      <p>A skin rash triggered by allergens, appearing as red, raised, itchy welts.</p>
+                  </div>
+              </div>
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-scrollbar"></div>
+      </div>
     </div>
 </section>
-<script>
-    const scrollWrapper = document.getElementById('scrollWrapper');
-    const items = ["Melanoma", "Psoriasis", "Eczema", "Basal Cell Carcinoma", "Rosacea", "Vitiligo", "Actinic Keratosis", "Tinea", "Hives"];
-    
-    function createScrollingItems() {
-        scrollWrapper.innerHTML = '';
-        const totalItems = items.concat(items);
-        totalItems.forEach(name => {
-            let div = document.createElement('div');
-            div.classList.add('item');
-            div.textContent = name;
-            scrollWrapper.appendChild(div);
-
-            // Pause scrolling on hover
-            div.addEventListener('mouseenter', () => {
-                isPaused = true;
-                div.classList.add('glow');
-            });
-            div.addEventListener('mouseleave', () => {
-                isPaused = false;
-                div.classList.remove('glow');
-            });
-        });
-    }
-
-    createScrollingItems();
-
-    let scrollAmount = 0;
-    let scrollSpeed = 1; // Reduced speed
-    let isPaused = false;
-
-    function autoScroll() {
-        if (!isPaused) {
-            scrollAmount -= scrollSpeed;
-            scrollWrapper.style.transform = `translateX(${scrollAmount}px)`;
-            if (Math.abs(scrollAmount) >= scrollWrapper.scrollWidth / 2) {
-                scrollAmount = 0;
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".swiper-container", {
+            effect: "coverflow",
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: "auto",
+            coverflowEffect: {
+                rotate: 20,
+                stretch: 0,
+                depth: 350,
+                modifier: 1,
+                slideShadows: true
+            },
+            pagination: {
+                el: ".swiper-pagination"
             }
-        }
-        requestAnimationFrame(autoScroll);
-    }
-
-    autoScroll();
-</script>
-
+        });
+    </script>
 
   <!-- Image Upload Section -->
   <section id="upload" class="py-16 bg-gray-900">
@@ -256,5 +423,7 @@
     ScrollReveal().reveal('#disease-prediction h3, #disease-prediction .disease-card', { delay: 300, distance: '20px', origin: 'bottom', interval: 100 });
     ScrollReveal().reveal('#upload, #about, #contact, footer', { delay: 300, distance: '20px', origin: 'bottom' });
   </script>
+    
+  
 </body>
 </html>

@@ -176,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if(this.y < 0 || this.y > dCanvas.height) this.speedY *= -1;
         }
         draw(){
-          dCtx.fillStyle = 'rgba(200,200,200,0.5)';
+          dCtx.fillStyle = 'rgb(67, 66, 66)';
           dCtx.beginPath();
           dCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
           dCtx.fill();
